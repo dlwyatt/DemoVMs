@@ -24,6 +24,9 @@ function global:Connect-Demo
     $session = New-PSSession -ComputerName localhost -Port $port -Credential $credential -Authentication Negotiate
 
     $global:PSDefaultParameterValues['Invoke-Command:Session'] = $session
+
+    Invoke-Command -Session $session { $remoteCert = Get-Item Cert:\CurrentUser\My\A6DDB481705C2AC53BFD6B35503EAD91E87B637E }
+    $global:localCert = Get-Item Cert:\CurrentUser\My\A6DDB481705C2AC53BFD6B35503EAD91E87B637E
 }
 
 Connect-Demo -Port $port
