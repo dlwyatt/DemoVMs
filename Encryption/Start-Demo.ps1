@@ -1,3 +1,8 @@
+if ($psISE)
+{
+    $psISE.Options.Zoom = 150
+}
+
 Write-Verbose -Verbose 'Starting Demo VM'
 $output = (vagrant up) -join "`r`n"
 Write-Verbose -Verbose 'Demo VM running.  Setting up PS Session.'
