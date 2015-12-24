@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "devopsguys/Windows2012R2Eval"
+  
+  config.vm.network "forwarded_port", guest: 3389, host: 11580, auto_correct: true
+  
+  config.vm.provider "virtualbox" do |v|
+    v.cpus = 1
+    v.memory = 2048
+    v.gui = false
+  end
+  
+  config.vm.provision "shell", inline: "& c:\\vagrant\\Configure.ps1"
+
+  config.vm.define "build" do |v|
+    v.vm.network "private_network", ip: "192.168.50.1", virtualbox__intnet: "pipelinedemo"
+  end
+
+  config.vm.define "dev" do |v|
+    v.vm.network "private_network", ip: "192.168.50.2", virtualbox__intnet: "pipelinedemo"
+  end
+
+  config.vm.define "prodweb" do |v|
+    v.vm.network "private_network", ip: "192.168.50.3", virtualbox__intnet: "pipelinedemo"
+  end
+
+  config.vm.define "proddb" do |v|
+    v.vm.network "private_network", ip: "192.168.50.4", virtualbox__intnet: "pipelinedemo"
+  end
+
+end
